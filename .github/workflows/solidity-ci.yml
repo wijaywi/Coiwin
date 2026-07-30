@@ -1,0 +1,45 @@
+name: Solidity CI
+
+on: 
+push: 
+branches: 
+- play 
+- develop 
+pull_request: 
+branches: 
+- play 
+- develop
+
+jobs: 
+lint-test-coverage: 
+runs-on: ubuntu-latest 
+
+strategy: 
+matrices: 
+node-version: [18.x] 
+
+steps: 
+- name: Checkout repository 
+uses: actions/checkout@v3 
+
+- name: Setup Node.js 
+uses: actions/setup-node@v3 
+with: 
+node-version: ${{ matrix.node-version }} 
+
+- name: Install dependencies 
+run: npm install 
+
+- name: Run Solidity Linter 
+run: npx hardhat lint 
+# Make sure you have the solhint/hardhat linter plugin in package.json 
+
+- name: Compile Contracts 
+run: npx hardhat compile 
+
+- name: Run Tests 
+run: npx hardhat test 
+
+- name: Generate Coverage 
+run: npx hardhat coverage
+# Make sure you have installed hardhat-coverage
