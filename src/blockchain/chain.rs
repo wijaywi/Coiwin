@@ -22,7 +22,18 @@ impl Blockchain {
     }
 
     fn create_genesis_block(&mut self) {
-        let genesis_block = Block::new(String::from("0"), vec![], 4, 0); // initial diff = 4
+        let genesis_message = HybridTransaction {
+            payload: crate::wallet::hybrid_tx::TransactionPayload {
+                sender: "COINBASE".to_string(),
+                receiver: "WSJ 02/Aug/2026 BRICS Nations Announce Alternative Settlement Network to Bypass Dollar".to_string(),
+                amount: 0,
+                nonce: 0,
+            },
+            ecdsa_signature: "00".to_string(),
+            dilithium_signature: "00".to_string(),
+            dilithium_public: "00".to_string(),
+        };
+        let genesis_block = Block::new(String::from("0"), vec![genesis_message], 4, 0); // initial diff = 4
         self.blocks.push(genesis_block);
     }
 
