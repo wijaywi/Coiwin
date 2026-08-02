@@ -6,7 +6,7 @@ Proof-of-Concept project for the integration of Post-Quantum Cryptography (PQC),
 ## ✨ What's this?
 CoiwinCoin wants to build a blockchain that is resistant to quantum computer attacks.
 The first step: adding a Dilithium signature verification module as a Proof-of-Concept (PoC).
-Copyright (c) 2025 Winjay (Wiwin Wijaya).
+2025 Winjay (Wiwin Wijaya).
 
 ## 📂 Repo Contents
 - `Coiwind/pqc/dilithium_precompile.rs` — Rust precompile code for Dilithium verification.
