@@ -51,13 +51,19 @@ fn main() -> Result<()> {
                 // Add to chain
                 chain.update_balances(&new_block.transactions);
                 chain.add_block(new_block);
+
+                let latest = chain.get_latest_block().unwrap();
+                print_ascii_block(chain.blocks.len() - 1, &latest.hash, &latest.header.previous_hash);
             }
             "balance" => {
                 let bal = chain.get_balance(&miner_address);
                 println!("Miner Balance: {} Coiwin", bal);
             }
             "status" => {
-                println!("Blockchain height: {}", chain.blocks.len());
+                let height = chain.blocks.len() - 1;
+                let latest = chain.get_latest_block().unwrap();
+                println!("Blockchain height: {}", height + 1);
+                print_ascii_block(height, &latest.hash, &latest.header.previous_hash);
                 println!("Latest block hash: {}", chain.get_latest_block().unwrap().hash);
                 println!("Next block difficulty: {}", chain.get_difficulty());
             }
@@ -72,4 +78,20 @@ fn main() -> Result<()> {
     }
 
     Ok(())
+}
+
+fn print_ascii_block(height: usize, hash: &str, prev_hash: &str) {
+    let hash_short = if hash.len() > 16 { format!("{}...", &hash[..16]) } else { hash.to_string() };
+    let prev_short = if prev_hash.len() > 16 { format!("{}...", &prev_hash[..16]) } else { prev_hash.to_string() };
+    
+    println!(r#"
+  .=================================.
+  |                                 |
+  |         BLOCK #{:<14} |
+  |                                 |
+  |---------------------------------|
+  | Hash: {:<25} |
+  | Prev: {:<25} |
+  '================================='
+    "#, height, hash_short, prev_short);
 }
