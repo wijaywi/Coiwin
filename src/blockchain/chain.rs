@@ -1,11 +1,12 @@
 use crate::blockchain::block::Block;
 use crate::wallet::hybrid_tx::HybridTransaction;
 use std::collections::HashMap;
+use serde::{Deserialize, Serialize};
 
 const BLOCK_GENERATION_INTERVAL: i64 = 10;
 const DIFFICULTY_ADJUSTMENT_INTERVAL: usize = 5;
 
-#[derive(Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Blockchain {
     pub blocks: Vec<Block>,
     pub accounts: HashMap<String, u64>, // Address -> Balance
@@ -19,6 +20,21 @@ impl Blockchain {
         };
         chain.create_genesis_block();
         chain
+    }
+
+    pub fn save_to_disk(&self) {
+        if let Ok(json) = serde_json::to_string_pretty(self) {
+            let _ = std::fs::write("coiwin_data.json", json);
+        }
+    }
+
+    pub fn load_from_disk() -> Option<Self> {
+        if let Ok(json) = std::fs::read_to_string("coiwin_data.json") {
+            if let Ok(chain) = serde_json::from_str(&json) {
+                return Some(chain);
+            }
+        }
+        None
     }
 
     fn create_genesis_block(&mut self) {

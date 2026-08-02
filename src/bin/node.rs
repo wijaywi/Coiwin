@@ -9,7 +9,13 @@ use anyhow::Result;
 fn main() -> Result<()> {
     println!("=== Coiwin Blockchain Node ===");
     println!("Initializing Blockchain...");
-    let mut chain = Blockchain::new();
+    let mut chain = if let Some(loaded) = Blockchain::load_from_disk() {
+        println!("Loaded blockchain from disk ({} blocks).", loaded.blocks.len());
+        loaded
+    } else {
+        println!("No local blockchain found. Creating Genesis block...");
+        Blockchain::new()
+    };
     
     // We will generate a wallet to act as the Miner's wallet (where rewards go)
     let miner_wallet = HybridWallet::generate()?;
@@ -51,6 +57,7 @@ fn main() -> Result<()> {
                 // Add to chain
                 chain.update_balances(&new_block.transactions);
                 chain.add_block(new_block);
+                chain.save_to_disk();
 
                 let latest = chain.get_latest_block().unwrap();
                 print_ascii_block(chain.blocks.len() - 1, &latest.hash, &latest.header.prev_hash);
