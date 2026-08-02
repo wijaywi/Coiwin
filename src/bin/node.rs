@@ -40,7 +40,9 @@ fn main() -> Result<()> {
                 };
 
                 let prev_hash = chain.get_latest_block().unwrap().hash.clone();
-                let mut new_block = Block::new(prev_hash, vec![coinbase_tx], chain.difficulty, 0);
+                let current_difficulty = chain.get_difficulty();
+                println!("Current network difficulty: {}", current_difficulty);
+                let mut new_block = Block::new(prev_hash, vec![coinbase_tx], current_difficulty, 0);
                 
                 // PoW
                 ProofOfWork::mine(&mut new_block);
@@ -57,6 +59,7 @@ fn main() -> Result<()> {
             "status" => {
                 println!("Blockchain height: {}", chain.blocks.len());
                 println!("Latest block hash: {}", chain.get_latest_block().unwrap().hash);
+                println!("Next block difficulty: {}", chain.get_difficulty());
             }
             "exit" => {
                 break;

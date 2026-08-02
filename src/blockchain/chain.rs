@@ -2,11 +2,13 @@ use crate::blockchain::block::Block;
 use crate::wallet::hybrid_tx::HybridTransaction;
 use std::collections::HashMap;
 
+const BLOCK_GENERATION_INTERVAL: i64 = 10;
+const DIFFICULTY_ADJUSTMENT_INTERVAL: usize = 5;
+
 #[derive(Debug, Clone)]
 pub struct Blockchain {
     pub blocks: Vec<Block>,
     pub accounts: HashMap<String, u64>, // Address -> Balance
-    pub difficulty: u32,
 }
 
 impl Blockchain {
@@ -14,19 +16,46 @@ impl Blockchain {
         let mut chain = Blockchain {
             blocks: Vec::new(),
             accounts: HashMap::new(),
-            difficulty: 4, // 4 leading hex zeros
         };
         chain.create_genesis_block();
         chain
     }
 
     fn create_genesis_block(&mut self) {
-        let genesis_block = Block::new(String::from("0"), vec![], self.difficulty, 0);
+        let genesis_block = Block::new(String::from("0"), vec![], 4, 0); // initial diff = 4
         self.blocks.push(genesis_block);
     }
 
     pub fn get_latest_block(&self) -> Option<&Block> {
         self.blocks.last()
+    }
+
+    pub fn get_difficulty(&self) -> u32 {
+        let latest_block = self.get_latest_block().unwrap();
+        
+        if self.blocks.len() > 1 && self.blocks.len() % DIFFICULTY_ADJUSTMENT_INTERVAL == 0 {
+            self.get_adjusted_difficulty(latest_block)
+        } else {
+            latest_block.header.difficulty
+        }
+    }
+
+    fn get_adjusted_difficulty(&self, latest_block: &Block) -> u32 {
+        let prev_adjustment_block = &self.blocks[self.blocks.len() - DIFFICULTY_ADJUSTMENT_INTERVAL];
+        let time_expected = BLOCK_GENERATION_INTERVAL * DIFFICULTY_ADJUSTMENT_INTERVAL as i64;
+        let time_taken = latest_block.header.timestamp - prev_adjustment_block.header.timestamp;
+
+        if time_taken < time_expected / 2 {
+            latest_block.header.difficulty + 1
+        } else if time_taken > time_expected * 2 {
+            if latest_block.header.difficulty > 1 {
+                latest_block.header.difficulty - 1
+            } else {
+                1
+            }
+        } else {
+            latest_block.header.difficulty
+        }
     }
 
     pub fn add_block(&mut self, block: Block) {
