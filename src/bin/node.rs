@@ -53,7 +53,7 @@ fn main() -> Result<()> {
                 chain.add_block(new_block);
 
                 let latest = chain.get_latest_block().unwrap();
-                print_ascii_block(chain.blocks.len() - 1, &latest.hash, &latest.header.previous_hash);
+                print_ascii_block(chain.blocks.len() - 1, &latest.hash, &latest.header.prev_hash);
             }
             "balance" => {
                 let bal = chain.get_balance(&miner_address);
@@ -63,7 +63,7 @@ fn main() -> Result<()> {
                 let height = chain.blocks.len() - 1;
                 let latest = chain.get_latest_block().unwrap();
                 println!("Blockchain height: {}", height + 1);
-                print_ascii_block(height, &latest.hash, &latest.header.previous_hash);
+                print_ascii_block(height, &latest.hash, &latest.header.prev_hash);
                 println!("Latest block hash: {}", chain.get_latest_block().unwrap().hash);
                 println!("Next block difficulty: {}", chain.get_difficulty());
             }
