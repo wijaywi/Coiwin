@@ -17,8 +17,18 @@ fn main() -> Result<()> {
         Blockchain::new()
     };
     
-    // We will generate a wallet to act as the Miner's wallet (where rewards go)
-    let miner_wallet = HybridWallet::generate()?;
+    // We will load the Miner's wallet from disk or generate a new one if it doesn't exist
+    let miner_wallet = if let Ok(json) = std::fs::read_to_string("miner_wallet.json") {
+        println!("Loaded existing miner wallet.");
+        serde_json::from_str(&json).unwrap_or_else(|_| HybridWallet::generate().unwrap())
+    } else {
+        println!("Creating new miner wallet...");
+        let w = HybridWallet::generate()?;
+        if let Ok(json) = serde_json::to_string_pretty(&w) {
+            let _ = std::fs::write("miner_wallet.json", json);
+        }
+        w
+    };
     let miner_address = miner_wallet.ecdsa_public.clone();
     println!("Miner Address: {}", miner_address);
 
