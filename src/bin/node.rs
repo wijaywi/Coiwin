@@ -1,0 +1,72 @@
+use coiwin::blockchain::block::Block;
+use coiwin::blockchain::chain::Blockchain;
+use coiwin::consensus::pow::ProofOfWork;
+use coiwin::consensus::validator::Validator;
+use coiwin::wallet::hybrid_tx::{HybridTransaction, HybridWallet, TransactionPayload};
+use std::io::{self, Write};
+use anyhow::Result;
+
+fn main() -> Result<()> {
+    println!("=== Coiwin Blockchain Node ===");
+    println!("Initializing Blockchain...");
+    let mut chain = Blockchain::new();
+    
+    // We will generate a wallet to act as the Miner's wallet (where rewards go)
+    let miner_wallet = HybridWallet::generate()?;
+    let miner_address = miner_wallet.ecdsa_public.clone();
+    println!("Miner Address: {}", miner_address);
+
+    loop {
+        print!("> ");
+        io::stdout().flush()?;
+        let mut input = String::new();
+        io::stdin().read_line(&mut input)?;
+        let command = input.trim();
+
+        match command {
+            "mine" => {
+                println!("Mining a new block...");
+                // Create a coinbase transaction for the block reward
+                let coinbase_tx = HybridTransaction {
+                    payload: TransactionPayload {
+                        sender: "COINBASE".to_string(),
+                        receiver: miner_address.clone(),
+                        amount: 50, // 50 Coiwin reward
+                        nonce: 0,
+                    },
+                    ecdsa_signature: "00".to_string(),
+                    dilithium_signature: "00".to_string(),
+                    dilithium_public: "00".to_string(),
+                };
+
+                let prev_hash = chain.get_latest_block().unwrap().hash.clone();
+                let mut new_block = Block::new(prev_hash, vec![coinbase_tx], chain.difficulty, 0);
+                
+                // PoW
+                ProofOfWork::mine(&mut new_block);
+                println!("Block mined! Hash: {}", new_block.hash);
+
+                // Add to chain
+                chain.update_balances(&new_block.transactions);
+                chain.add_block(new_block);
+            }
+            "balance" => {
+                let bal = chain.get_balance(&miner_address);
+                println!("Miner Balance: {} Coiwin", bal);
+            }
+            "status" => {
+                println!("Blockchain height: {}", chain.blocks.len());
+                println!("Latest block hash: {}", chain.get_latest_block().unwrap().hash);
+            }
+            "exit" => {
+                break;
+            }
+            "" => continue,
+            _ => {
+                println!("Unknown command. Available commands: mine, balance, status, exit");
+            }
+        }
+    }
+
+    Ok(())
+}

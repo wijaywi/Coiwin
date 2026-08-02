@@ -16,7 +16,7 @@ pub struct HybridWallet {
     pub dilithium_public: String,
 }
 
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct TransactionPayload {
     pub sender: String, // ecdsa_public hex
     pub receiver: String,
@@ -24,7 +24,7 @@ pub struct TransactionPayload {
     pub nonce: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct HybridTransaction {
     pub payload: TransactionPayload,
     pub ecdsa_signature: String,     // hex encoded
