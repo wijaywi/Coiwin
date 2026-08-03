@@ -114,7 +114,8 @@ impl Blockchain {
 
     pub fn recalculate_balances(&mut self) {
         self.accounts.clear();
-        for block in &self.blocks {
+        let blocks_snapshot = self.blocks.clone();
+        for block in &blocks_snapshot {
             self.update_balances(&block.transactions);
         }
     }
