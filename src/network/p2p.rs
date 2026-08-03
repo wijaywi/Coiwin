@@ -6,11 +6,14 @@ use std::net::{TcpListener, TcpStream};
 use std::sync::{Arc, Mutex};
 use std::thread;
 
+use crate::wallet::hybrid_tx::HybridTransaction;
+
 #[derive(Serialize, Deserialize, Debug)]
 pub enum P2PMessage {
     RequestBlocks,
     SendBlocks(Vec<Block>),
     NewBlock(Block),
+    NewTransaction(HybridTransaction),
 }
 
 pub struct P2PNode {
@@ -85,6 +88,13 @@ impl P2PNode {
                                 local_chain.save_to_disk();
                             }
                         }
+                        P2PMessage::NewTransaction(tx) => {
+                            let mut local_chain = chain.lock().unwrap();
+                            if local_chain.add_transaction(tx) {
+                                println!("Received new transaction from peer!");
+                                local_chain.save_to_disk(); // save mempool
+                            }
+                        }
                     }
                 }
             }
@@ -129,6 +139,18 @@ impl P2PNode {
         for peer in peers {
             if let Ok(mut stream) = TcpStream::connect(&peer) {
                 let msg = P2PMessage::NewBlock(block.clone());
+                if let Ok(msg_json) = serde_json::to_string(&msg) {
+                    let _ = stream.write_all(msg_json.as_bytes());
+                }
+            }
+        }
+    }
+
+    pub fn broadcast_transaction(&self, tx: &HybridTransaction) {
+        let peers = self.peers.lock().unwrap().clone();
+        for peer in peers {
+            if let Ok(mut stream) = TcpStream::connect(&peer) {
+                let msg = P2PMessage::NewTransaction(tx.clone());
                 if let Ok(msg_json) = serde_json::to_string(&msg) {
                     let _ = stream.write_all(msg_json.as_bytes());
                 }

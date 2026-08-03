@@ -56,6 +56,36 @@ fn main() -> Result<()> {
             continue;
         }
 
+        if command.starts_with("send ") {
+            let parts: Vec<&str> = command.split_whitespace().collect();
+            if parts.len() == 3 {
+                let receiver = parts[1].to_string();
+                if let Ok(amount) = parts[2].parse::<u64>() {
+                    let payload = TransactionPayload {
+                        sender: miner_address.clone(),
+                        receiver,
+                        amount,
+                        nonce: 0,
+                    };
+                    if let Ok(tx) = miner_wallet.sign_transaction(&payload) {
+                        let mut c = shared_chain.lock().unwrap();
+                        if c.add_transaction(tx.clone()) {
+                            println!("Transaction added to mempool!");
+                            c.save_to_disk();
+                            p2p.broadcast_transaction(&tx);
+                        }
+                    } else {
+                        println!("Failed to sign transaction.");
+                    }
+                } else {
+                    println!("Invalid amount.");
+                }
+            } else {
+                println!("Usage: send <address> <amount>");
+            }
+            continue;
+        }
+
         match command {
             "mine" => {
                 println!("Mining a new block...");
@@ -71,14 +101,19 @@ fn main() -> Result<()> {
                     dilithium_public: "00".to_string(),
                 };
 
+                let mut txs = vec![coinbase_tx];
                 let (prev_hash, current_difficulty) = {
-                    let c = shared_chain.lock().unwrap();
+                    let mut c = shared_chain.lock().unwrap();
+                    let pending = c.pending_transactions.clone();
+                    txs.extend(pending);
+                    c.pending_transactions.clear();
                     let latest = c.get_latest_block().unwrap();
                     (latest.hash.clone(), c.get_difficulty())
                 };
 
                 println!("Current network difficulty: {}", current_difficulty);
-                let mut new_block = Block::new(prev_hash, vec![coinbase_tx], current_difficulty, 0);
+                println!("Packing {} transactions into block...", txs.len());
+                let mut new_block = Block::new(prev_hash, txs, current_difficulty, 0);
                 
                 // PoW
                 ProofOfWork::mine(&mut new_block);
@@ -102,6 +137,7 @@ fn main() -> Result<()> {
                 let c = shared_chain.lock().unwrap();
                 let bal = c.get_balance(&miner_address);
                 println!("Miner Balance: {} Coiwin", bal);
+                println!("Pending txs in Mempool: {}", c.pending_transactions.len());
             }
             "status" => {
                 let c = shared_chain.lock().unwrap();
@@ -112,13 +148,14 @@ fn main() -> Result<()> {
                 println!("Latest block hash: {}", latest.hash);
                 println!("Next block difficulty: {}", c.get_difficulty());
                 println!("Connected peers: {}", p2p.peers.lock().unwrap().len());
+                println!("Mempool size: {} txs", c.pending_transactions.len());
             }
             "exit" => {
                 break;
             }
             "" => continue,
             _ => {
-                println!("Available commands: mine, balance, status, connect <ip:port>, exit");
+                println!("Available commands: mine, balance, status, connect <ip:port>, send <addr> <amount>, exit");
             }
         }
     }

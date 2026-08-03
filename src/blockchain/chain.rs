@@ -10,6 +10,8 @@ const DIFFICULTY_ADJUSTMENT_INTERVAL: usize = 5;
 pub struct Blockchain {
     pub blocks: Vec<Block>,
     pub accounts: HashMap<String, u64>, // Address -> Balance
+    #[serde(default)]
+    pub pending_transactions: Vec<HybridTransaction>,
 }
 
 impl Blockchain {
@@ -17,6 +19,7 @@ impl Blockchain {
         let mut chain = Blockchain {
             blocks: Vec::new(),
             accounts: HashMap::new(),
+            pending_transactions: Vec::new(),
         };
         chain.create_genesis_block();
         chain
@@ -114,5 +117,19 @@ impl Blockchain {
         for block in &self.blocks {
             self.update_balances(&block.transactions);
         }
+    }
+
+    pub fn add_transaction(&mut self, tx: HybridTransaction) -> bool {
+        if tx.verify().unwrap_or(false) {
+            if self.get_balance(&tx.payload.sender) >= tx.payload.amount {
+                self.pending_transactions.push(tx);
+                return true;
+            } else {
+                println!("Transaction rejected: Insufficient balance.");
+            }
+        } else {
+            println!("Transaction rejected: Invalid signature.");
+        }
+        false
     }
 }
