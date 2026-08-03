@@ -108,4 +108,11 @@ impl Blockchain {
     pub fn get_balance(&self, address: &str) -> u64 {
         *self.accounts.get(address).unwrap_or(&0)
     }
+
+    pub fn recalculate_balances(&mut self) {
+        self.accounts.clear();
+        for block in &self.blocks {
+            self.update_balances(&block.transactions);
+        }
+    }
 }
