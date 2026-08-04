@@ -1,11 +1,11 @@
-#CoiwinCoin — PQC PoC
+# Coiwin — Quantum-Resistant L1 Blockchain
 
-A Proof-of-Concept project for integrating Post-Quantum Cryptography (PQC), specifically Dilithium (digital signature) and Kyber (key encapsulation), into the CoiwinCoin ecosystem.
+An open-source Layer-1 Blockchain Mainnet integrating Post-Quantum Cryptography (PQC), specifically Dilithium (digital signatures) and Kyber (key encapsulation), secured by a dynamic Proof-of-Work (PoW) consensus.
 
 ## What's this?
 CoiwinCoin aims to develop a blockchain that is resistant to quantum computer attacks.
 
-First step: Adding a Dilithium signature verification module as a Proof-of-Concept (PoC).
+First step: A fully functional Proof-of-Work (PoW) Mainnet with Dilithium signature verification to secure hybrid transactions.
 
 ## Repo Contents
 - `Coiwind/pqc/dilithium_precompile.rs` — Rust precompiled code for Dilithium verification.
@@ -21,7 +21,7 @@ cargo build --workspace --features pqc-dilithium
 # run test
 cargo test --workspace --features pqc-dilithium
 * Roadmap (initial phase)
-• Add Dilithium precompile PoC
+• Launch PoW Mainnet with Dilithium hybrid wallets
 • Add Kyber KEM for P2P
 • CLI wallet with hybrid tx (ECDSA + Dilithium)
 • Benchmark on testnet
@@ -67,7 +67,7 @@ npx hardhat run scripts/testDilithium.ts
 # ⚖️ Legal & OPSEC Disclaimer
 
 **IMPORTANT NOTICE:** 
-Coiwin is an **experimental, open-source Proof-of-Concept (PoC)** software project exploring Post-Quantum Cryptography (PQC) within a blockchain architecture. 
+Coiwin is an **experimental, open-source Layer-1 Mainnet** project exploring Post-Quantum Cryptography (PQC) within a Proof-of-Work (PoW) blockchain architecture. 
 
 1. **Not a Financial Product:** Coiwin is strictly a technological experiment. It is **NOT** a security, an investment product, or a financial instrument. 
 2. **No Value Guarantee:** Coiwin coins possess no inherent monetary value. The creators make no promises regarding future price, market capitalization, or exchange listings.
