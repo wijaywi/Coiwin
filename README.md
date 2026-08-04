@@ -27,6 +27,17 @@ cargo test --workspace --features pqc-dilithium
 • Benchmark on testnet
 * MIT license — free to use, modify, and distribute.
 
+## CLI Node Usage Guide
+When you run `node.exe`, you will enter the Coiwin interactive terminal. The following commands are available:
+
+- `mine`: Start mining a new block. If successful, you receive a 50 Coiwin block reward.
+- `balance`: Display your current wallet balance and the number of pending transactions in your local mempool.
+- `accounts`: Display the Coiwin Rich List (all network addresses and their respective balances).
+- `status`: Show current blockchain height, latest block hash, current mining difficulty, and number of connected P2P peers.
+- `connect <ip:port>`: Connect to another Coiwin node (e.g., `connect 12.34.56.78:8000`).
+- `send <address> <amount>`: Send Coiwin to another user's public address (e.g., `send 024c397f... 15`).
+- `exit`: Safely shut down the node.
+
 ##->
 ##  How to Run Tests
 
