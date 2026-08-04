@@ -1,0 +1,9 @@
+# Compiled Rust output
+/target/
+
+# Local configuration and wallets (DO NOT PUSH THIS)
+miner_wallet.json
+
+# Local scripts
+autominer.py
+bot_penambang.vbs
