@@ -71,7 +71,7 @@ Coiwin is an **experimental, open-source Layer-1 Mainnet** project exploring Pos
 
 1. **Not a Financial Product:** Coiwin is strictly a technological experiment. It is **NOT** a security, an investment product, or a financial instrument. 
 2. **No Value Guarantee:** Coiwin coins possess no inherent monetary value. The creators make no promises regarding future price, market capitalization, or exchange listings.
-3. **No ICO or Premine:** There is no Initial Coin Offering (ICO), no presale, and no venture capital backing. Coins are generated purely through Proof-of-Work (PoW) consensus by network participants.
+3. **No ICO or Premine:** There is no Initial Coin Offering (ICO), no presale, and no venture capital backing. Coins are generated purely through Proof-of-Work (PoW) consensus by network participants. **The very first mined blocks were an open bounty available to anyone, and the public invitation for the Mainnet launch was officially posted in the Discussions forum of this repository prior to the launch.**
 4. **Zero Liability (MIT License):** As stated in the `LICENSE` file, this software is provided **"AS IS"**. The creators, authors, and contributors of Coiwin accept **ZERO LIABILITY** for any financial loss, hardware damage, or legal repercussions resulting from compiling, running, or interacting with this software. Participate at your own risk.
 
 *By downloading, running, or interacting with the Coiwin network, you acknowledge and agree to these terms.*
