@@ -139,6 +139,25 @@ fn main() -> Result<()> {
                 println!("Miner Balance: {} Coiwin", bal);
                 println!("Pending txs in Mempool: {}", c.pending_transactions.len());
             }
+            "accounts" => {
+                let c = shared_chain.lock().unwrap();
+                println!("\n--- Coiwin Rich List (All Accounts) ---");
+                if c.accounts.is_empty() {
+                    println!("No accounts with balances found yet.");
+                } else {
+                    let mut sorted_accounts: Vec<(&String, &u64)> = c.accounts.iter().collect();
+                    sorted_accounts.sort_by(|a, b| b.1.cmp(a.1));
+                    for (addr, bal) in sorted_accounts {
+                        let short_addr = if addr.len() > 16 {
+                            format!("{}...{}", &addr[..8], &addr[addr.len()-8..])
+                        } else {
+                            addr.clone()
+                        };
+                        println!("Address: {:<19} | Balance: {} CWN", short_addr, bal);
+                    }
+                }
+                println!("---------------------------------------\n");
+            }
             "status" => {
                 let c = shared_chain.lock().unwrap();
                 let height = c.blocks.len() - 1;
@@ -155,7 +174,7 @@ fn main() -> Result<()> {
             }
             "" => continue,
             _ => {
-                println!("Available commands: mine, balance, status, connect <ip:port>, send <addr> <amount>, exit");
+                println!("Available commands: mine, balance, accounts, status, connect <ip:port>, send <addr> <amount>, exit");
             }
         }
     }
