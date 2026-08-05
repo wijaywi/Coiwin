@@ -1,35 +1,33 @@
-# Coiwin — Quantum-Resistant L1 Blockchain
+# Coiwin — Quantum-Resistant PoW Blockchain
 
-An open-source Layer-1 Blockchain Mainnet integrating Post-Quantum Cryptography (PQC), specifically Dilithium (digital signatures) and Kyber (key encapsulation), secured by a dynamic Proof-of-Work (PoW) consensus.
+Coiwin is an innovative, open-source Layer-1 Blockchain Mainnet secured by a dynamic Proof-of-Work (PoW) consensus. Engineered to withstand the future of computing, Coiwin natively integrates Post-Quantum Cryptography (PQC), specifically Dilithium digital signatures and Kyber key encapsulation, to ensure your transactions remain unhackable even in the quantum era. 
 
-## What's this?
-CoiwinCoin aims to develop a blockchain that is resistant to quantum computer attacks.
+Coiwin is proudly developed in Indonesia. We welcome local developers (Depok, Jakarta, and beyond) as well as global open-source contributors to join our quantum-resistant revolution!
 
-First step: A fully functional Proof-of-Work (PoW) Mainnet with Dilithium signature verification to secure hybrid transactions.
+![Coiwin Proof-of-Work Architecture Diagram](docs/architecture.png)
 
-## Repo Contents
-- `Coiwind/pqc/dilithium_precompile.rs` — Rust precompiled code for Dilithium verification.
-- `docs/pqc.md` — PQC concept documentation & roadmap.
-- `.github/workflows/pqc-tests.yml` — GitHub Actions workflow for automated testing.
-- `LICENSE` — MIT license.
+## Key Features
 
-## Build method (example for developers)
+- **Post-Quantum Cryptography (PQC):** Integrates [NIST-standardized Dilithium](https://csrc.nist.gov/projects/post-quantum-cryptography) for digital signatures.
+- **Proof-of-Work (PoW):** A robust, permissionless, and fair consensus mechanism.
+- **Hybrid Transaction Model:** Combines Classic ECDSA with Quantum Dilithium for maximum security.
+- **Fair Launch:** No ICO, no presale, and no premine. 100% community-driven distribution.
+
+## Installation & Build Instructions
+
+### PQC Dilithium Integration (Rust)
+
+To compile the node with PQC features, ensure you have Rust installed, then run:
 ```bash
 # build with PQC features
 cargo build --workspace --features pqc-dilithium
 
-# run test
+# run tests
 cargo test --workspace --features pqc-dilithium
-* Roadmap (initial phase)
-• Launch PoW Mainnet with Dilithium hybrid wallets
-• Add Kyber KEM for P2P
-• CLI wallet with hybrid tx (ECDSA + Dilithium)
-• Benchmark on testnet
-* MIT license — free to use, modify, and distribute.
+```
 
-## CLI Node Usage Guide __________________________________________________________________________________________
+### CLI Node Usage Guide
 When you run `node.exe`, you will enter the Coiwin interactive terminal. The following commands are available:
-
 - `mine`: Start mining a new block. If successful, you receive a 50 Coiwin block reward.
 - `balance`: Display your current wallet balance and the number of pending transactions in your local mempool.
 - `accounts`: Display the Coiwin Rich List (all network addresses and their respective balances).
@@ -37,30 +35,22 @@ When you run `node.exe`, you will enter the Coiwin interactive terminal. The fol
 - `connect <ip:port>`: Connect to another Coiwin node (e.g., `connect 12.34.56.78:8000`).
 - `send <address> <amount>`: Send Coiwin to another user's public address (e.g., `send 024c397f... 15`).
 - `exit`: Safely shut down the node.
-## ________________________________________________________________________________________________________________
-##->
-##  How to Run Tests
 
-This project includes unit tests for the PQC (Dilithium) module.
-To run the tests locally:
-
-```bash
-# build with PQC features
-cargo build --workspace --features pqc-dilithium
-
-# run tests
-cargo test --workspace --features pqc-dilithium
-##->
-##  How to Run Solidity Tests (Hardhat)
-
+## Running Solidity Tests (Hardhat)
 To test the `contracts/DilithiumVerifier.sol` contract:
-
-1. Install Hardhat dependencies (one-time only):
+1. Install Hardhat dependencies:
 ```bash
 npm install --save-dev hardhat @nomiclabs/hardhat-ethers ethers typescript ts-node
+```
 2. Run the deploy + test script:
+```bash
 npx hardhat run scripts/testDilithium.ts
+```
 
+## Repository Structure
+- `Coiwind/pqc/dilithium_precompile.rs` — Rust precompiled code for Dilithium verification.
+- `docs/pqc.md` — PQC concept documentation & roadmap.
+- `.github/workflows/pqc-tests.yml` — GitHub Actions workflow for automated testing.
 
 ---
 
