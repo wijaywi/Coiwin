@@ -1,5 +1,8 @@
 # Coiwin — Quantum-Resistant PoW Blockchain
 
+[![View Source Code on GitHub](https://img.shields.io/badge/View_on_GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/wijaywi/Coiwin)
+[![Download Coiwin Node](https://img.shields.io/badge/Download_Node-0052CC?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/wijaywi/Coiwin/releases)
+
 Coiwin is an innovative, open-source Layer-1 Blockchain Mainnet secured by a dynamic Proof-of-Work (PoW) consensus. Engineered to withstand the future of computing, Coiwin natively integrates Post-Quantum Cryptography (PQC), specifically Dilithium digital signatures and Kyber key encapsulation, to ensure your transactions remain unhackable even in the quantum era. 
 
 Coiwin is proudly developed in Indonesia. We welcome local developers (Depok, Jakarta, and beyond) as well as global open-source contributors to join our quantum-resistant revolution!
