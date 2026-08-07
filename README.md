@@ -23,8 +23,7 @@ cargo run --features pqc-dilithium
 ### Expected Output
 ```text
 === Coiwin Quantum-Resistant Cryptography Library ===
-Notice: Full Blockchain features (Wallet, PoW, P2P) have been removed from this public repository for security reasons.
-This binary now serves as a simple demonstration of Dilithium signatures.
+This binary serves as a simple demonstration of Dilithium signatures.
 
 [1] Generating Dilithium Keypair...
 Public Key generated (2592 bytes)

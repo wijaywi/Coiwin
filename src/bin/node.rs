@@ -4,8 +4,7 @@ use pqcrypto_traits::sign::{PublicKey, SecretKey};
 
 fn main() -> Result<()> {
     println!("=== Coiwin Quantum-Resistant Cryptography Library ===");
-    println!("Notice: Full Blockchain features (Wallet, PoW, P2P) have been removed from this public repository for security reasons.");
-    println!("This binary now serves as a simple demonstration of Dilithium signatures.\n");
+    println!("This binary serves as a simple demonstration of Dilithium signatures.\n");
 
     println!("[1] Generating Dilithium Keypair...");
     let (pk, sk) = dilithium_precompile::generate_keypair();
