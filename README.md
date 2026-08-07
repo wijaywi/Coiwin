@@ -50,6 +50,7 @@ Result: VERIFICATION SUCCESSFUL! The signature is valid.
 **IMPORTANT NOTICE:**
 This software is provided purely as an experimental, open-source research module.
 
-1. **Not a Cryptocurrency:** This repository DOES NOT contain any cryptocurrency, wallet, node, or mining software. It is strictly a cryptographic library.
+1. **Not a Cryptocurrency:** This repository DOES NOT contain any cryptocurrency wallet, node, or mining software. It is a cryptographic library.
 2. **Zero Liability:** As stated in the `LICENSE` (MIT License), this software is provided **"AS IS"**. The creators, authors, and contributors accept **ZERO LIABILITY** for any financial loss, hardware damage, or legal repercussions resulting from compiling, modifying, or integrating this code. 
-3. **Unaudited Code:** This module is an educational proof-of-concept and has not undergone formal security audits. Do not use in production environments holding real financial value without proper auditing.
+3. **Unaudited Code:** This module is an educational proof-of-concept and has not undergone formal security audits.
+4. Do not use in production environments holding real financial value.
