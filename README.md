@@ -1,8 +1,8 @@
-# Rust Module: Dilithium PQC Integration for Blockchain
+# Coiwin: PQC Framework for Blockchain
 
-This repository provides an open-source Rust module for integrating **Post-Quantum Cryptography (PQC)** into blockchain architectures. Specifically, it implements the NIST-standardized **Dilithium** digital signature scheme (CRYSTALS-Dilithium) to ensure transaction security against future quantum computer attacks.
+The **Coiwin PQC Framework** provides an open-source Rust module for integrating **Post-Quantum Cryptography (PQC)** into blockchain architectures. Specifically, it implements the NIST-standardized **Dilithium** digital signature scheme (CRYSTALS-Dilithium) to ensure transaction security against future quantum computer attacks.
 
-This module was originally developed as part of experimental research into quantum-resistant ledger technology. It has now been decoupled into a standalone library to serve as an educational and technical resource for cryptography researchers and blockchain developers.
+Originally developed as part of experimental research into quantum-resistant ledger technology, **Coiwin** has now been decoupled into a standalone cryptographic library to serve as an educational and technical resource for cryptography researchers and blockchain developers.
 
 ## Features
 
