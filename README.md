@@ -1,70 +1,56 @@
-# Coiwin — Quantum-Resistant PoW Blockchain
+# Rust Module: Dilithium PQC Integration for Blockchain
 
-[![View Source Code on GitHub](https://img.shields.io/badge/View_on_GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/wijaywi/Coiwin)
-[![Download Coiwin Node](https://img.shields.io/badge/Download_Node-0052CC?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/wijaywi/Coiwin/releases)
+This repository provides an open-source Rust module for integrating **Post-Quantum Cryptography (PQC)** into blockchain architectures. Specifically, it implements the NIST-standardized **Dilithium** digital signature scheme (CRYSTALS-Dilithium) to ensure transaction security against future quantum computer attacks.
 
-Coiwin is an innovative, open-source Layer-1 Blockchain Mainnet secured by a dynamic Proof-of-Work (PoW) consensus. Engineered to withstand the future of computing, Coiwin natively integrates Post-Quantum Cryptography (PQC), specifically Dilithium digital signatures and Kyber key encapsulation, to ensure your transactions remain unhackable even in the quantum era. 
+This module was originally developed as part of experimental research into quantum-resistant ledger technology. It has now been decoupled into a standalone library to serve as an educational and technical resource for cryptography researchers and blockchain developers.
 
-Coiwin is proudly developed in Indonesia. We welcome local developers (Depok, Jakarta, and beyond) as well as global open-source contributors to join our quantum-resistant revolution!
+## Features
 
-![Coiwin Proof-of-Work Architecture Diagram](docs/architecture.png)
+- **Dilithium Signatures:** Native Rust precompiles for Dilithium keypair generation, detached signing, and rigorous signature verification.
+- **Blockchain Agnostic:** Designed to be easily integrated into any consensus mechanism or smart contract execution environment.
+- **High Performance:** Built entirely in memory-safe and fast Rust.
+- **Educational Foundation:** Clean, un-obfuscated code serving as a blueprint for upgrading legacy ECDSA architectures to Quantum-Resistant architectures.
 
-## Key Features
+## Usage & Demonstration
 
-- **Post-Quantum Cryptography (PQC):** Integrates [NIST-standardized Dilithium](https://csrc.nist.gov/projects/post-quantum-cryptography) for digital signatures.
-- **Proof-of-Work (PoW):** A robust, permissionless, and fair consensus mechanism.
-- **Hybrid Transaction Model:** Combines Classic ECDSA with Quantum Dilithium for maximum security.
-- **Fair Launch:** No ICO, no presale, and no premine. 100% community-driven distribution.
+This repository contains a simple binary to demonstrate the core functionality of the Dilithium signature lifecycle.
 
-## Installation & Build Instructions
-
-### PQC Dilithium Integration (Rust)
-
-To compile the node with PQC features, ensure you have Rust installed, then run:
+To run the demonstration:
 ```bash
-# build with PQC features
-cargo build --workspace --features pqc-dilithium
-
-# run tests
-cargo test --workspace --features pqc-dilithium
+cargo run --features pqc-dilithium
 ```
 
-### CLI Node Usage Guide
-When you run `node.exe`, you will enter the Coiwin interactive terminal. The following commands are available:
-- `mine`: Start mining a new block. If successful, you receive a 50 Coiwin block reward.
-- `balance`: Display your current wallet balance and the number of pending transactions in your local mempool.
-- `accounts`: Display the Coiwin Rich List (all network addresses and their respective balances).
-- `status`: Show current blockchain height, latest block hash, current mining difficulty, and number of connected P2P peers.
-- `connect <ip:port>`: Connect to another Coiwin node (e.g., `connect 12.34.56.78:8000`).
-- `send <address> <amount>`: Send Coiwin to another user's public address (e.g., `send 024c397f... 15`).
-- `exit`: Safely shut down the node.
+### Expected Output
+```text
+=== Coiwin Quantum-Resistant Cryptography Library ===
+Notice: Full Blockchain features (Wallet, PoW, P2P) have been removed from this public repository for security reasons.
+This binary now serves as a simple demonstration of Dilithium signatures.
 
-## Running Solidity Tests (Hardhat)
-To test the `contracts/DilithiumVerifier.sol` contract:
-1. Install Hardhat dependencies:
-```bash
-npm install --save-dev hardhat @nomiclabs/hardhat-ethers ethers typescript ts-node
-```
-2. Run the deploy + test script:
-```bash
-npx hardhat run scripts/testDilithium.ts
+[1] Generating Dilithium Keypair...
+Public Key generated (2592 bytes)
+Secret Key generated (4864 bytes)
+
+[2] Signing message: Hello, Quantum World!
+Signature created (3293 bytes)
+
+[3] Verifying signature...
+Result: VERIFICATION SUCCESSFUL! The signature is valid.
 ```
 
 ## Repository Structure
-- `Coiwind/pqc/dilithium_precompile.rs` — Rust precompiled code for Dilithium verification.
-- `docs/pqc.md` — PQC concept documentation & roadmap.
-- `.github/workflows/pqc-tests.yml` — GitHub Actions workflow for automated testing.
+
+- `src/pqc/dilithium_precompile.rs` — Core Rust implementation of the Dilithium digital signature module.
+- `src/bin/node.rs` — Demonstration CLI.
+- `docs/pqc.md` — Additional documentation regarding Post-Quantum Cryptography concepts.
+- `contracts/DilithiumVerifier.sol` — Solidity smart contract for Dilithium verification on EVM-compatible chains.
 
 ---
 
-# ⚖️ Legal & OPSEC Disclaimer
+## Legal & Disclaimer
 
-**IMPORTANT NOTICE:** 
-Coiwin is an **experimental, open-source Layer-1 Mainnet** project exploring Post-Quantum Cryptography (PQC) within a Proof-of-Work (PoW) blockchain architecture. 
+**IMPORTANT NOTICE:**
+This software is provided purely as an experimental, open-source research module.
 
-1. **Not a Financial Product:** Coiwin is strictly a technological experiment. It is **NOT** a security, an investment product, or a financial instrument. 
-2. **No Value Guarantee:** Coiwin coins possess no inherent monetary value. The creators make no promises regarding future price, market capitalization, or exchange listings.
-3. **No ICO or Premine:** There is no Initial Coin Offering (ICO), no presale, and no venture capital backing. Coins are generated purely through Proof-of-Work (PoW) consensus by network participants. **The very first mined blocks were an open bounty available to anyone, and the public invitation for the Mainnet launch was officially posted in the Discussions forum of this repository prior to the launch.**
-4. **Zero Liability (MIT License):** As stated in the `LICENSE` file, this software is provided **"AS IS"**. The creators, authors, and contributors of Coiwin accept **ZERO LIABILITY** for any financial loss, hardware damage, or legal repercussions resulting from compiling, running, or interacting with this software. Participate at your own risk.
-
-*By downloading, running, or interacting with the Coiwin network, you acknowledge and agree to these terms.*
+1. **Not a Cryptocurrency:** This repository DOES NOT contain any cryptocurrency, wallet, node, or mining software. It is strictly a cryptographic library.
+2. **Zero Liability:** As stated in the `LICENSE` (MIT License), this software is provided **"AS IS"**. The creators, authors, and contributors accept **ZERO LIABILITY** for any financial loss, hardware damage, or legal repercussions resulting from compiling, modifying, or integrating this code. 
+3. **Unaudited Code:** This module is an educational proof-of-concept and has not undergone formal security audits. Do not use in production environments holding real financial value without proper auditing.
