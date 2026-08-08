@@ -1,5 +1,8 @@
 # Coiwin: PQC Framework for Blockchain
 
+[![View Source Code on GitHub](https://img.shields.io/badge/View_on_GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/wijaywi/Coiwin)
+[![Download Coiwin Node](https://img.shields.io/badge/Download_Node-0052CC?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/wijaywi/Coiwin/releases)
+
 🌐 **Official Website:** [https://wijaywi.github.io/Coiwin](https://wijaywi.github.io/Coiwin)
 
 
