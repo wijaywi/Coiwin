@@ -1,5 +1,8 @@
 # Coiwin: PQC Framework for Blockchain
 
+🌐 **Official Website:** [https://wijaywi.github.io/Coiwin](https://wijaywi.github.io/Coiwin)
+
+
 The **Coiwin PQC Framework** provides an open-source Rust module for integrating **Post-Quantum Cryptography (PQC)** into blockchain architectures. Specifically, it implements the NIST-standardized **Dilithium** digital signature scheme (CRYSTALS-Dilithium) to ensure transaction security against future quantum computer attacks.
 
 Originally developed as part of experimental research into quantum-resistant ledger technology, **Coiwin** has now been decoupled into a standalone cryptographic library to serve as an educational and technical resource for cryptography researchers and blockchain developers.
@@ -38,10 +41,10 @@ Result: VERIFICATION SUCCESSFUL! The signature is valid.
 
 ## Repository Structure
 
-- `src/pqc/dilithium_precompile.rs` — Core Rust implementation of the Dilithium digital signature module.
-- `src/bin/node.rs` — Demonstration CLI.
-- `docs/pqc.md` — Additional documentation regarding Post-Quantum Cryptography concepts.
-- `contracts/DilithiumVerifier.sol` — Solidity smart contract for Dilithium verification on EVM-compatible chains.
+- `src/pqc/dilithium_precompile.rs` - Core Rust implementation of the Dilithium digital signature module.
+- `src/bin/node.rs` - Demonstration CLI.
+- `docs/pqc.md` - Additional documentation regarding Post-Quantum Cryptography concepts.
+- `contracts/DilithiumVerifier.sol` - Solidity smart contract for Dilithium verification on EVM-compatible chains.
 
 ---
 
